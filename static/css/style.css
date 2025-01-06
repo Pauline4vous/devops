@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch:400,700|Indie+Flower:400');
+
+/* general elements styling */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    line-height: 1.15;
+    scroll-behavior: smooth;
+    font-size: 1rem;
+}
+
+body {
+    background-color: #EFEFDD;
+    font-family: "Indie Flower", sans-serif;
+}
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+div a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* colors */
+
+.bg-nav {
+    background-color: transparent;
+}
+
+.bg-glight {
+    background-color: #EFEFDD;
+}
+
+.bg-darkgreen {
+    background-color: #005732;
+}
+
+.bg-othergreen {
+    background-color: #47A349;
+}
+
+.light-text {
+    color: #EFEFDD;
+}
+
+.green-text {
+    color: #005732;
+}
+
+.lgreen-text {
+    color: #47A349;
+}
+
+/* Buttons */
+
+.btn {
+    height: 3rem;
+    font-size: 1.25rem;
+}
+/* Add button to have same height as search bar */
+.btn-add {
+    height: 2.3rem;
+    font-size: 1.1rem;
+}
+
+.btn:hover {
+    color: #005732;
+    background-color: #47A349;
+}
+
+/* Icons: to decrease their sizes from font awesome default class */
+
+.icon, .fas {
+    font-size: 0.8rem;
+}
+
+/* Logo */
+
+#logo {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+
+#logo img {
+    width: 120px;
+    height: 120px;
+}
+
+/* Nav */
+
+.nav-font {
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #47A349;
+}
+
+/* Spinner toggler icon */
+
+.fa-spinner {
+    font-size: 3rem;
+    color: #153415;
+}
+
+/* Home image */
+.img-container {
+    min-height: 80vh;
+    width: 100%;
+}
+
+/* Little trick for background position https://css-tricks.com/almanac/properties/b/background-position/. */
+.home-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background: url(../images/home.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: relative;
+    padding-top: 0;
+}
+
+.attention {
+    width: 100%;
+    color: #153415;
+    font-family: 'Cabin Sketch', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    padding-left: 5px;
+    padding-top: 13rem;
+}
+
+/* Banner image height is smaller for other pages than on home page. */
+.image-container {
+    min-height: 30vh;
+    width: 100%;
+}
+
+/* cards */
+.card-img-contain {
+    position: relative;
+    padding-bottom: 100%;
+}
+
+.card-img-contain img {
+    position: absolute;
+}
+
+.card-img {
+    height: 100%;
+}
+
+.card-collapse {
+    cursor: pointer;
+    border: none;
+}
+
+.card-collapse:hover{
+    color:#47A349
+}
+
+.collapsed-content {
+    display: none;
+    padding: 0 1.12rem;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.card-link {
+    text-decoration: underline;
+    color: #47A349;
+}
+
+.card-link:hover{
+    color:#153415; 
+}
+
+/* login */
+
+#login {
+    padding: 1.25rem;
+}
+
+/* Hyperlink inside add items */
+
+.hyperlink {
+    text-decoration: underline;
+    cursor: pointer; 
+}
+
+.underline:hover{
+    color: #47A349;
+}
+
+/* Delete items inside update.html */
+
+.remove {
+    border: 0.5rem solid #153415;
+    padding: 0.5rem;
+}
+
+.remove-highlight {
+    text-decoration: underline;
+    cursor: pointer; 
+    font-size: 1.5rem;
+}
+
+.remove-highlight:hover {
+    text-decoration: line-through;
+    color: #47A349;
+}
+
+/* about */
+
+.statement-item {
+    margin-top: .5rem;
+    line-height: 1.2rem;
+}
+
+/* footer */
+
+.footer-row {
+    padding: 0.6rem;
+    margin-top: 1rem;
+}
+
+.footer-content {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* css code for social media icon is copied and slightly changed from Resume Mini-Project */
+.social-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    -webkit-transition: all 0.35s ease-in-out;
+    -o-transition: all 0.35s ease-in-out;
+}
+
+/* trick to remove underline on font awesome icon when hover: https://codepen.io/jessicalyschik/pen/MJrwwx */
+
+.social-icon:before {
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* media queries */
+/* Special media query below to bring down attention text on bigger mobile devices */
+@media (min-width: 375px){
+    .attention{
+        padding-top: 22rem;
+    }
+}
+
+/* Special media query below to bring down attention text on even bigger mobile devices and tablets */
+@media (min-width: 576px){
+    .btn-add {
+        font-size: 1.5rem;
+    }
+    .img-container {
+        min-height: 90vh;
+    }
+    .attention{
+        width: 70%;
+        font-size: 3.5rem;
+        padding-left: 1.5rem;
+        padding-top: 30rem;
+    }
+}
+/* Special media query below to bring down attention text on bigger screens */
+@media (min-width: 925px){
+    .attention{
+        width: 60%;
+        padding-top: 40rem;
+    }
+    
+}

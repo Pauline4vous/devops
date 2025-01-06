@@ -1,0 +1,63 @@
+{% block cards %}
+
+<section class='container-fluid mx-auto'>
+	<div class="row text-center justify-content-center green-text" id="card-item">
+        {% for item in items %}
+		<div class="col-12 col-sm-6 col-lg-4">
+			<div class="card my-2 text-center">
+				<div class="card-body p-0">
+                    <div class="row my-3">
+                        <div class="col-10 px-0">
+                            <h3 class="card-title text-uppercase" id="item_name">{{item.item_name}}</h4>
+                        </div>
+                        <div class="col-2 mt-2">
+                            <h5 class="card-subtitle mb-2" id="item_category">
+                            {% if item.item_category == 'Outdoor' %}<i class="fas fa-cloud-sun"></i>
+                            {% elif item.item_category == 'Kids' %}<i class="fas fa-child"></i>
+                            {% elif item.item_category == 'Household' %}<i class="fas fa-home"></i>
+                            {% else %}<i class="fas fa-random"></i>
+                            {% endif %}
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col">
+                            <a href='' class='card-collapse px-0 mx-0'>
+                                Find more details...
+                                <i class="pl-2 fas fa-chevron-down"></i>
+                            </a>
+                            <p class="card-text collapsed-content text-left px-0 mx-0 lgreen-text" id="item_description">{{item.item_description}}</p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col">
+                            <h6>Can be collected in {{item.item_location}}</h6>
+                        </div>
+                    </div>
+                    {% if item.item_img %}
+                    <div class="card-img-contain text-left mb-3">
+                            <img src="{{item.item_img}}" class="card-img-top card-img" alt="Item Image" id="item_img">
+                    </div>
+                    {% endif %}
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <a href="mailto:{{item.item_contact}}" class="card-link">Contact</a>
+                            <span class="card-subtitle mt-0">{{item.username}}</span>
+                        </div>
+                    </div>
+                    {% if active == 'account' %}
+                    <div class="row my-3">
+                        <div class="col-12 text-center">
+                        <!--url_for('python_function_name', any other function argument)-->
+                            <a href="{{url_for('update_item', item_id=item._id)}}" class="btn bg-darkgreen light-text">Edit</a>
+                        </div>
+                    </div>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+        {% endfor %}
+	</div>
+</section>
+
+{% endblock %}
