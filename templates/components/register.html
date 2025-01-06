@@ -2,51 +2,32 @@
 {% block content %}
 
 <section class="container-fluid">
-	<div class="row text-center">
-		<div class="col-11 col-md-7 col-lg-5 mx-auto mt-5 card" id='register'>
-            <h3 class='green-text mb-5'>Join the gang so you can also pass on items!</h3>
-			<form method="POST" class='needs-validation'>
-				<div class="form-group mb-5">
-                    <div class="row">
-                        <div class="col-3">
-                            <label for="name">Username</label>
-                        </div>
-                        <div class="col-9">
-                            <input type="text" class="form-control" id="name" name="username" aria-describedby="name"required>
-                        </div>
+    <div class="row justify-content-center">
+        <div class="col-11 col-md-7 col-lg-5">
+            <div class="card shadow-sm p-4">
+                <h2 class="text-center mb-4" style="font-family: 'Permanent Marker', cursive;">Join the Gang!</h2>
+                <form method="POST" class="needs-validation">
+                    <div class="form-group mb-4">
+                        <label for="name">Username</label>
+                        <input type="text" class="form-control form-control-lg" id="name" name="username" required>
                     </div>
-                </div>
-                <div class="form-group mb-5">
-                    <div class="row">
-                        <div class="col-3">
-                            <label for="email">Email Address</label>
-                        </div>
-                        <div class="col-9">
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="email"required>
-                        </div>
+                    <div class="form-group mb-4">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control form-control-lg" id="email" name="email" required>
                     </div>
-				</div>
-				<div class="form-group mb-5">
-                    <div class="row">
-                        <div class="col-3">
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="col-9">
-                            <input type="password" class="form-control" id="password" name="password"min-length='5'max-length='10' placeholder='Between 5 and 10 characters'required>
-                        </div>
+                    <div class="form-group mb-4">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password"
+                               minlength="5" maxlength="10" placeholder="Between 5 and 10 characters" required>
                     </div>
-                </div>
-                <div class="row">
-                    <h4>By submitting my details, I agree to have my email address used by other members if they wanted to contact me in relation to my items.</h4>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center mb-5">
-                        <button type="submit" class="btn bg-darkgreen light-text mt-5 text-uppercase">Join</button>
+                    <div class="alert alert-info mb-4">
+                        By submitting my details, I agree to have my email address used by other members if they wanted to contact me in relation to my items.
                     </div>
-                </div>
-			</form>
-		</div>
-	</div>
+                    <button type="submit" class="btn bg-accent light-text w-100">JOIN THE GANG</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

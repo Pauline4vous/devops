@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch:400,700|Indie+Flower:400');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Source+Sans+Pro:wght@400;600&display=swap');
 
-/* general elements styling */
-
+/* General elements styling */
 * {
     box-sizing: border-box;
 }
@@ -15,8 +14,9 @@ html {
 }
 
 body {
-    background-color: #EFEFDD;
-    font-family: "Indie Flower", sans-serif;
+    background-color: #f0f4f8;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #2d3748;
 }
 
 .container-fluid {
@@ -36,71 +36,78 @@ div a {
 
 .underline {
     text-decoration: underline;
+    text-decoration-color: #4299e1;
 }
 
 li {
     list-style-type: none;
 }
 
-/* colors */
-
+/* Colors */
 .bg-nav {
-    background-color: transparent;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.bg-glight {
-    background-color: #EFEFDD;
+.bg-primary {
+    background-color: #fff;
 }
 
-.bg-darkgreen {
-    background-color: #005732;
+.bg-secondary {
+    background-color: #ebf8ff;
 }
 
-.bg-othergreen {
-    background-color: #47A349;
+.bg-accent {
+    background-color: #4299e1;
 }
 
 .light-text {
-    color: #EFEFDD;
+    color: #fff;
 }
 
-.green-text {
-    color: #005732;
+.primary-text {
+    color: #2b6cb0;
 }
 
-.lgreen-text {
-    color: #47A349;
+.secondary-text {
+    color: #4299e1;
 }
 
 /* Buttons */
-
 .btn {
     height: 3rem;
     font-size: 1.25rem;
-}
-/* Add button to have same height as search bar */
-.btn-add {
-    height: 2.3rem;
-    font-size: 1.1rem;
+    background-color: #4299e1;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 .btn:hover {
-    color: #005732;
-    background-color: #47A349;
+    background-color: #2b6cb0;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Icons: to decrease their sizes from font awesome default class */
+.btn-add {
+    height: 2.3rem;
+    font-size: 1.1rem;
+    background-color: #4299e1;
+    color: #fff;
+}
 
+/* Icons */
 .icon, .fas {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    color: #4299e1;
 }
 
 /* Logo */
-
 #logo {
     padding: 0;
     margin: 0;
-    text-decoration: none;
 }
 
 #logo img {
@@ -108,189 +115,141 @@ li {
     height: 120px;
 }
 
-/* Nav */
-
+/* Navigation */
 .nav-font {
     font-size: 1.5rem;
+    font-family: 'Permanent Marker', cursive;
+    color: #2b6cb0;
+}
+
+.navbar-nav .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #47A349;
+    color: #4299e1;
 }
 
-/* Spinner toggler icon */
-
-.fa-spinner {
-    font-size: 3rem;
-    color: #153415;
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #4299e1;
+    transition: width 0.3s ease;
 }
 
-/* Home image */
-.img-container {
-    min-height: 80vh;
+.navbar-nav .nav-link:hover::after {
     width: 100%;
 }
 
-/* Little trick for background position https://css-tricks.com/almanac/properties/b/background-position/. */
-.home-image {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    background: url(../images/home.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    position: relative;
-    padding-top: 0;
+/* Cards */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: none;
+    padding: 1rem;
 }
 
-.attention {
-    width: 100%;
-    color: #153415;
-    font-family: 'Cabin Sketch', sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    padding-left: 5px;
-    padding-top: 13rem;
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Banner image height is smaller for other pages than on home page. */
-.image-container {
-    min-height: 30vh;
-    width: 100%;
-}
-
-/* cards */
 .card-img-contain {
     position: relative;
     padding-bottom: 100%;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .card-img-contain img {
     position: absolute;
-}
-
-.card-img {
-    height: 100%;
+    object-fit: cover;
 }
 
 .card-collapse {
     cursor: pointer;
     border: none;
+    color: #2b6cb0;
+    font-family: 'Permanent Marker', cursive;
 }
 
-.card-collapse:hover{
-    color:#47A349
+.card-collapse:hover {
+    color: #4299e1;
 }
 
-.collapsed-content {
-    display: none;
-    padding: 0 1.12rem;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
+/* Notice board specific styles */
+.notice-pin {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #e53e3e;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.card-link {
-    text-decoration: underline;
-    color: #47A349;
+.item-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    margin: 0.25rem;
 }
 
-.card-link:hover{
-    color:#153415; 
-}
-
-/* login */
-
-#login {
-    padding: 1.25rem;
-}
-
-/* Hyperlink inside add items */
-
-.hyperlink {
-    text-decoration: underline;
-    cursor: pointer; 
-}
-
-.underline:hover{
-    color: #47A349;
-}
-
-/* Delete items inside update.html */
-
-.remove {
-    border: 0.5rem solid #153415;
-    padding: 0.5rem;
-}
-
-.remove-highlight {
-    text-decoration: underline;
-    cursor: pointer; 
-    font-size: 1.5rem;
-}
-
-.remove-highlight:hover {
-    text-decoration: line-through;
-    color: #47A349;
-}
-
-/* about */
-
-.statement-item {
-    margin-top: .5rem;
-    line-height: 1.2rem;
-}
-
-/* footer */
-
+/* Footer */
 .footer-row {
-    padding: 0.6rem;
-    margin-top: 1rem;
+    background-color: #2b6cb0;
+    color: #fff;
+    padding: 1rem 0;
+    margin-top: 2rem;
 }
 
 .footer-content {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
+    display: flex;
     align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
     padding: 0;
     margin: 0;
 }
 
-/* css code for social media icon is copied and slightly changed from Resume Mini-Project */
 .social-icon {
-    width: 18px;
-    height: 18px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    background-color: #fff;
+    color: #2b6cb0;
     font-size: 1.1rem;
-    text-align: center;
-    vertical-align: middle;
-    display: table-cell;
-    transition: all 0.35s ease-in-out;
-    -moz-transition: all 0.35s ease-in-out;
-    -webkit-transition: all 0.35s ease-in-out;
-    -o-transition: all 0.35s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
 }
 
-/* trick to remove underline on font awesome icon when hover: https://codepen.io/jessicalyschik/pen/MJrwwx */
-
-.social-icon:before {
-    display: inline-block;
-    text-decoration: none;
+.social-icon:hover {
+    transform: translateY(-2px);
+    background-color: #4299e1;
+    color: #fff;
 }
 
-/* media queries */
-/* Special media query below to bring down attention text on bigger mobile devices */
-@media (min-width: 375px){
-    .attention{
-        padding-top: 22rem;
+/* Media Queries */
+@media (min-width: 375px) {
+    .btn-add {
+        font-size: 1.25rem;
     }
 }
 
-/* Special media query below to bring down attention text on even bigger mobile devices and tablets */
-@media (min-width: 576px){
+@media (min-width: 576px) {
     .btn-add {
         font-size: 1.5rem;
     }
@@ -309,6 +268,11 @@ li {
     .attention{
         width: 60%;
         padding-top: 40rem;
+}
+
+@media (min-width: 768px) {
+    .card {
+        margin: 1rem;
     }
-    
+}
 }

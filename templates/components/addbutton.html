@@ -1,7 +1,10 @@
 {% block addbutton %}
 
-<div class="{% if active == 'account' %}col-12 text-center {% else %} col-6 {% endif %} my-3 px-1">
-    <a href="{{url_for('add_item')}}" class="btn btn-add bg-darkgreen light-text align-middle">Add Item</a>
+<div class="{% if active == 'account' %}col-12 text-center{% else %}col-6{% endif %} my-3 px-1">
+    <a href="{{url_for('add_item')}}" class="btn btn-add bg-accent light-text d-flex align-items-center justify-content-center">
+        <i class="fas fa-thumbtack mr-2"></i>
+        Add Item
+    </a>
 </div>
 
 {% endblock %}
