@@ -1,30 +1,53 @@
-// courtesy of Simen Daehlin from my first milestone, via https://codepen.io/Eventyret/pen/RXBNaJ
 /**
  * @event scroll
- * Logo disappear on window scrolling 
+ * Logo disappears on window scrolling
  */
-$(window).scroll(function(){
+$(window).scroll(function () {
     $("#logo-img").css("opacity", 1 - $(window).scrollTop() / 50);
 });
 
 /**
- * Function to collapse item description on card
- * Creating array from all elements with same class
- * Looping through array
- * @event click 
+ * Function to collapse item descriptions on cards
+ * Creates an array from all elements with the same class
+ * Loops through the array and toggles visibility
+ * @event click
  */
-function collapsingCards(){
-    let cardCollapse = Array.from(document.getElementsByClassName("card-collapse"));
+function collapsingCards() {
+    const cardCollapse = Array.from(
+        document.getElementsByClassName("card-collapse")
+    );
 
-cardCollapse.forEach(card => {
-    card.addEventListener("click", function(e){
-    e.preventDefault();
-    let collapsedContent = card.nextElementSibling;
-    if(collapsedContent.style.display === "block"){
-        collapsedContent.style.display = "none";
-    } else collapsedContent.style.display = "block";
-});
-});
+    cardCollapse.forEach((card) => {
+        card.addEventListener("click", function (e) {
+            e.preventDefault();
+            const collapsedContent = card.nextElementSibling;
+            collapsedContent.style.display =
+                collapsedContent.style.display === "block" ? "none" : "block";
+        });
+    });
 }
 
 collapsingCards();
+
+/**
+ * @event keyup
+ * Search bar functionality to filter items by name or description
+ */
+const searchInput = document.getElementById("search-bar");
+if (searchInput) {
+    searchInput.addEventListener("keyup", function () {
+        const query = searchInput.value.toLowerCase();
+        const cards = Array.from(document.getElementsByClassName("card"));
+        cards.forEach((card) => {
+            const title = card.querySelector(".card-title").innerText.toLowerCase();
+            const description = card
+                .querySelector(".card-text")
+                .innerText.toLowerCase();
+            if (title.includes(query) || description.includes(query)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+}
