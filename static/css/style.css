@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch:400,700|Indie+Flower:400');
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Cabin+Sketch:400,700');
 
-/* general elements styling */
+/* General Element Styling */
 
 * {
     box-sizing: border-box;
@@ -15,8 +15,9 @@ html {
 }
 
 body {
-    background-color: #EFEFDD;
-    font-family: "Indie Flower", sans-serif;
+    background-color: #F4F8FF; /* Light blue background for school board theme */
+    font-family: "Gloria Hallelujah", sans-serif; /* Handwriting-style font for a playful school board look */
+    margin: 0;
 }
 
 .container-fluid {
@@ -29,47 +30,39 @@ body {
     margin-right: 0;
 }
 
-div a {
+a {
     text-decoration: none;
     color: inherit;
-}
-
-.underline {
-    text-decoration: underline;
 }
 
 li {
     list-style-type: none;
 }
 
-/* colors */
+/* Colors */
 
 .bg-nav {
     background-color: transparent;
 }
 
-.bg-glight {
-    background-color: #EFEFDD;
+.bg-darkblue {
+    background-color: #003366; /* Dark blue for important elements */
 }
 
-.bg-darkgreen {
-    background-color: #005732;
-}
-
-.bg-othergreen {
-    background-color: #47A349;
-}
-
-.light-text {
-    color: #EFEFDD;
+.bg-lightblue {
+    background-color: #E6F0FF; /* Light blue for subtle highlights */
 }
 
 .green-text {
-    color: #005732;
+    color: #47A349;
 }
 
-.lgreen-text {
-    color: #47A349;
+.blue-text {
+    color: #003366;
+}
+
+.white-text {
+    color: #FFFFFF;
 }
 
 /* Buttons */
@@ -77,238 +70,190 @@ li {
 .btn {
     height: 3rem;
     font-size: 1.25rem;
-}
-/* Add button to have same height as search bar */
-.btn-add {
-    height: 2.3rem;
-    font-size: 1.1rem;
+    border: 2px solid #003366; /* Blue border for buttons */
+    color: #003366;
+    background-color: #E6F0FF;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
 }
 
 .btn:hover {
-    color: #005732;
+    color: #FFFFFF;
+    background-color: #003366;
+}
+
+/* "Pinned" Cards Styling */
+
+.card {
+    background-color: #FFFFFF; /* White cards for contrast */
+    border: 2px dashed #003366; /* Dashed border for a "pinned" effect */
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a lifted effect */
+    position: relative;
+    margin: 1rem;
+    width: 300px; /* Fixed width for uniformity */
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+/* "Pins" on Cards */
+.card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: #FF5757; /* Red pin */
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* Card Title */
+.card-title {
+    font-family: 'Cabin Sketch', sans-serif;
+    font-size: 1.5rem;
+    color: #003366;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* Card Content */
+.card-content {
+    font-size: 1rem;
+    color: #003366;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Card Links */
+.card-link {
+    text-decoration: underline;
+    color: #003366;
+    font-weight: bold;
+}
+
+.card-link:hover {
+    color: #47A349;
+}
+
+/* Header Styling */
+
+.header {
+    background-color: #003366;
+    color: #FFFFFF;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 2rem;
+    font-family: 'Cabin Sketch', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+
+.footer {
+    background-color: #003366;
+    color: #FFFFFF;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+/* Login Form */
+
+#login {
+    background-color: #FFFFFF;
+    border: 2px dashed #003366;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 2rem auto;
+    width: 400px;
+}
+
+#login input {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#login button {
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #003366;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+#login button:hover {
     background-color: #47A349;
 }
 
-/* Icons: to decrease their sizes from font awesome default class */
-
-.icon, .fas {
-    font-size: 0.8rem;
-}
-
-/* Logo */
-
-#logo {
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-}
-
-#logo img {
-    width: 120px;
-    height: 120px;
-}
-
-/* Nav */
-
-.nav-font {
-    font-size: 1.5rem;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #47A349;
-}
-
-/* Spinner toggler icon */
-
-.fa-spinner {
-    font-size: 3rem;
-    color: #153415;
-}
-
-/* Home image */
-.img-container {
-    min-height: 80vh;
-    width: 100%;
-}
-
-/* Little trick for background position https://css-tricks.com/almanac/properties/b/background-position/. */
-.home-image {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    background: url(../images/home.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    position: relative;
-    padding-top: 0;
-}
-
-.attention {
-    width: 100%;
-    color: #153415;
-    font-family: 'Cabin Sketch', sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    padding-left: 5px;
-    padding-top: 13rem;
-}
-
-/* Banner image height is smaller for other pages than on home page. */
-.image-container {
-    min-height: 30vh;
-    width: 100%;
-}
-
-/* cards */
-.card-img-contain {
-    position: relative;
-    padding-bottom: 100%;
-}
-
-.card-img-contain img {
-    position: absolute;
-}
-
-.card-img {
-    height: 100%;
-}
-
-.card-collapse {
-    cursor: pointer;
-    border: none;
-}
-
-.card-collapse:hover{
-    color:#47A349
-}
-
-.collapsed-content {
-    display: none;
-    padding: 0 1.12rem;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-}
-
-.card-link {
-    text-decoration: underline;
-    color: #47A349;
-}
-
-.card-link:hover{
-    color:#153415; 
-}
-
-/* login */
-
-#login {
-    padding: 1.25rem;
-}
-
-/* Hyperlink inside add items */
+/* Hyperlinks */
 
 .hyperlink {
     text-decoration: underline;
-    cursor: pointer; 
+    color: #003366;
+    font-weight: bold;
 }
 
-.underline:hover{
+.hyperlink:hover {
     color: #47A349;
 }
 
-/* Delete items inside update.html */
-
-.remove {
-    border: 0.5rem solid #153415;
-    padding: 0.5rem;
-}
-
-.remove-highlight {
-    text-decoration: underline;
-    cursor: pointer; 
-    font-size: 1.5rem;
-}
-
-.remove-highlight:hover {
-    text-decoration: line-through;
-    color: #47A349;
-}
-
-/* about */
+/* About Section */
 
 .statement-item {
-    margin-top: .5rem;
-    line-height: 1.2rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    color: #003366;
 }
 
-/* footer */
+/* Media Queries */
 
-.footer-row {
-    padding: 0.6rem;
-    margin-top: 1rem;
-}
+@media (min-width: 576px) {
+    .card {
+        width: 350px;
+    }
 
-.footer-content {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
-
-/* css code for social media icon is copied and slightly changed from Resume Mini-Project */
-.social-icon {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    text-align: center;
-    vertical-align: middle;
-    display: table-cell;
-    transition: all 0.35s ease-in-out;
-    -moz-transition: all 0.35s ease-in-out;
-    -webkit-transition: all 0.35s ease-in-out;
-    -o-transition: all 0.35s ease-in-out;
-}
-
-/* trick to remove underline on font awesome icon when hover: https://codepen.io/jessicalyschik/pen/MJrwwx */
-
-.social-icon:before {
-    display: inline-block;
-    text-decoration: none;
-}
-
-/* media queries */
-/* Special media query below to bring down attention text on bigger mobile devices */
-@media (min-width: 375px){
-    .attention{
-        padding-top: 22rem;
+    .btn {
+        height: 3.5rem;
+        font-size: 1.4rem;
     }
 }
 
-/* Special media query below to bring down attention text on even bigger mobile devices and tablets */
-@media (min-width: 576px){
-    .btn-add {
+@media (min-width: 768px) {
+    .header {
+        font-size: 2.5rem;
+    }
+
+    .card {
+        width: 400px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header {
+        font-size: 3rem;
+    }
+
+    .btn {
         font-size: 1.5rem;
+        height: 4rem;
     }
-    .img-container {
-        min-height: 90vh;
-    }
-    .attention{
-        width: 70%;
-        font-size: 3.5rem;
-        padding-left: 1.5rem;
-        padding-top: 30rem;
-    }
-}
-/* Special media query below to bring down attention text on bigger screens */
-@media (min-width: 925px){
-    .attention{
-        width: 60%;
-        padding-top: 40rem;
-    }
-    
-}
