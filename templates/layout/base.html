@@ -1,69 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-<meta name="description" content="Re-Use Gang">
-<meta name="keywords" content="reuse, recycle, community, freecycle, free, exchange">
-<meta name="author" content="MPia Kuti">
-
-<!-- favicon -->
-	<link rel="shortcut icon" type="image" href="{{url_for('static', filename='favicon/favicon-32x32.png')}}">
-
-<!-- style links -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-
-<!-- link to my css file comes after to make sure it render over bootstrap style -->
-<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css"/>
-
-<title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Re-Use Gang">
+    <meta name="keywords" content="reuse, recycle, community, freecycle, free, exchange">
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image" href="{{url_for('static', filename='favicon/favicon-32x32.png')}}">
+    <!-- Style links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css"/>
+    <title>{{title}}</title>
 </head>
-
-
 <body>
-
-<!-- Navbar -->
-{% include 'layout/nav.html' %}
-
-<!-- Home or banner image -->
-{% if active == "home" %}
-{% include 'components/homeimage.html' %}
-{% else %}
-{% include 'components/bannerimage.html' %}
-{% endif %}
-
-<!-- Main content -->
-
-<!-- Flash messages -->
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-            <h3 class="text-center green-text">{{ message }}</h3>
-        {% endfor %}
+    <!-- Navbar -->
+    {% include 'layout/nav.html' %}
+    <!-- Home or banner image -->
+    {% if active == "home" %}
+        {% include 'components/homeimage.html' %}
+    {% else %}
+        {% include 'components/bannerimage.html' %}
     {% endif %}
-{% endwith %}
-
-{% block content %} {% endblock %}
-
-<!-- About -->
-{% include 'components/about.html' %}
-
-<!-- Footer -->
-{% include 'layout/footer.html' %}
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<!-- link to my js file comes after other scripts to make sure does not slow down webpage  -->
-<script src="{{url_for('static', filename='js/main.js')}}"></script>
-{% if active == 'home' %}
-<script src="{{url_for('static', filename='js/filter.js')}}"></script>
-{% endif %}
+    <!-- Main content -->
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h3 class="text-center blue-text">{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <!-- About -->
+    {% include 'components/about.html' %}
+    <!-- Footer -->
+    {% include 'layout/footer.html' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    {% if active == 'home' %}
+        <script src="{{url_for('static', filename='js/filter.js')}}"></script>
+    {% endif %}
 </body>
 </html>
