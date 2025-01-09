@@ -1,14 +1,13 @@
 {% block searchbar %}
-
 <section class="container-fluid">
     <div class="row text-center">
         <div class="col-6 dropdown my-3">
             <form>
                 <div class="input-group mb-3">
                     <select class="custom-select" id="search-category" name="item_category">
-                        <option value='default' selected>Filter items by category...</option>
+                        <option value="default" selected>Filter items by category...</option>
                         <option value="Kids">Kids</option>
-                        <option value="Outdoor">Outdoor<i class="fas fa-cloud-sun"></i></option>
+                        <option value="Outdoor">Outdoor</option>
                         <option value="Household">Household</option>
                         <option value="Other">Other</option>
                     </select>
@@ -18,5 +17,4 @@
         {% include 'components/addbutton.html' %}
     </div>
 </section>
-
 {% endblock %}
