@@ -1,87 +1,79 @@
 /**
  * @event onchange
- * Fetching category selected in dropdown bar in html
- * Sending selection to Python for query backend database
- * Receiving filtered data back and calling function to loop through
+ * Fetching category selected in the dropdown bar in HTML
+ * Sending selection to Python for backend query of the database
+ * Receiving filtered data back and calling the function to loop through
  * @callback <loopItems>
  */
-    const selectCat = document.getElementById("search-category");
-    const card = document.getElementById("card-item");
+const selectCat = document.getElementById("search-category");
+const card = document.getElementById("card-item");
 
-    selectCat.onchange = function() {
-        cat = selectCat.value;
-    
-        fetch(`${window.origin}/items/filter`, {
-            method: "POST",
-            body: JSON.stringify(cat),
-            cache: 'no-cache',
-            headers: new Headers({
-                "content-type": "application/json"
-            })
-        })
-        .then(function(response) {
-            response.json().then(function(data){
-                loopItems(data);
-            });
-        })
-        .catch(function(err){
-            console.log(err);
-            alert(`Error: ${err}. To return to the main page, go to ${location.hostname}`);
+selectCat.onchange = function () {
+    const cat = selectCat.value;
+
+    fetch(${window.origin}/items/filter, {
+        method: "POST",
+        body: JSON.stringify(cat),
+        cache: "no-cache",
+        headers: new Headers({
+            "content-type": "application/json",
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => loopItems(data))
+        .catch((err) => {
+            console.error(err);
+            alert(
+                Error: ${err}. Please refresh the page or return to the main page.
+            );
         });
-    };
+};
 
 /**
  * Looping through @param {array} Array of filtered items
- * Removing id hex number from object to construct url for editing item inside template literal
- * @callback <injectCard> to append html template to an empty variable
- * Injecting ID element with new html
- * @callback <collapsingCards> so new filtered template can also collapse
+ * Removing id hex number from the object to construct the URL for editing the item inside a template literal
+ * Rebuilding the card content dynamically and injecting it into the DOM
+ * @callback <collapsingCards> so new filtered templates can also collapse
  */
 function loopItems(data) {
-     cardContent = '';
-    data.forEach(item => {
-        itemId = item._id.$oid;
+    let cardContent = "";
+    data.forEach((item) => {
         cardContent += injectCard(item);
     });
-    $("#card-item").html(cardContent);
-    collapsingCards();
+    card.innerHTML = cardContent;
+    collapsingCards(); // Ensure collapsing functionality applies to the new cards
 }
 
 /**
- * Switch function to return specific icon classes depending of item category
- * @param {object} Item with keys and values, including category to be used for switch
+ * Switch function to return specific icon classes depending on item category
+ * @param {object} item - The item object with keys and values, including category
  */
-function whichCat(item){
-    let itemCat = item.item_category;
-    switch(itemCat) {
-        case 'Outdoor':
-            return 'fa-cloud-sun';
-            break;
-        case 'Kids':
-            return 'fa-child';
-            break;
-        case 'Household':
-            return 'fa-home';
-            break;
-        case 'Other':
-            return 'fa-random';
-            break;
+function whichCat(item) {
+    const itemCat = item.item_category;
+    switch (itemCat) {
+        case "Outdoor":
+            return "fa-cloud-sun";
+        case "Kids":
+            return "fa-child";
+        case "Household":
+            return "fa-home";
+        case "Other":
+            return "fa-random";
         default:
-            return;
+            return "";
     }
 }
 
 /**
- * Function to inject html to a variable using template literals
- * @callback <whichCat> to have specific icon to add to html depending of category
- * @param {object} Item to add its keys and values to html
+ * Function to inject HTML into a variable using template literals
+ * @callback <whichCat> to add a specific icon to the HTML depending on the category
+ * @param {object} item - The item object to add its keys and values to the HTML
  */
 function injectCard(item) {
-    whichCat(item);
-    cardHtml = `
-            <div class="col-12 col-sm-6 col-lg-4">
-			<div class="card my-2 text-center">
-				<div class="card-body p-0">
+    const cardHtml = 
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card my-2 text-center">
+                <div class="card-body p-0">
                     <div class="row my-3">
                         <div class="col-10 px-0">
                             <h3 class="card-title text-uppercase mb-4">${item.item_name}</h3>
@@ -94,7 +86,7 @@ function injectCard(item) {
                     </div>
                     <div class="row my-3">
                         <div class="col">
-                            <a type='button' class='card-collapse light-text px-0 mx-0'>
+                            <a type="button" class="card-collapse light-text px-0 mx-0">
                                 <h6>Find more info about this item...<i class="pl-2 fas fa-chevron-down"></i></h6>
                             </a>
                             <p class="card-text collapsed-content text-left px-0 mx-0 lgreen-text">${item.item_description}</p>
@@ -105,27 +97,27 @@ function injectCard(item) {
                             <h6>Can be collected in ${item.item_location}</h6>
                         </div>
                     </div>
-                    ${(() => {
-                        if (item.item_img){
-                            return `<div class="card-img-contain text-left mb-3">
-                                        <img src="${item.item_img}" class="card-img-top card-img" alt="Item Image">
-                                    </div>`;
-                        }
-                    })()}
+                    ${
+                        item.item_img
+                            ? <div class="card-img-contain text-left mb-3">
+				<img src="${item.item_img}" class="card-img-top card-img" alt="Item Image">
+                              </div>
+                            : ""
+                    }
                     <div class="row my-3">
-                        <div class="col-12">>
+                        <div class="col-12">
                             <a href="mailto:${item.item_contact}" class="card-link">Contact</a>
                             <span class="card-subtitle mt-0">${item.username}</span>
                         </div>
                     </div>
                     <div class="row my-3">
                         <div class="col-12">
-                            <a href="/items/update/${itemId}" class="btn bg-darkgreen light-text">Edit</a>
+                            <a href="/items/update/${item._id.$oid}" class="btn bg-darkblue white-text">Edit</a>
                         </div>
                     </div>
-				</div>
-			</div>
-		</div>
-        `;
-        return cardHtml;
+                </div>
+            </div>
+        </div>
+    ;
+    return cardHtml;
 }
