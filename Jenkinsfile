@@ -14,11 +14,16 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat '''
-                python3 -m venv venv
+                C:\Users\Envy\AppData\Local\Programs\Python\Python313\python.exe -m venv venv
                 venv\\Scripts\\activate
                 pip install --upgrade pip
                 pip install -r requirements.txt
                 '''
+            }
+        }
+        stage('Test Docker Access') {
+            steps {
+                bat 'docker version'
             }
         }
         stage('Run Tests') {
