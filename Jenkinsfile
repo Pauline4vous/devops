@@ -43,9 +43,9 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'HEROKU_API_KEY', variable: 'HEROKU_API_KEY')]) {
                     bat '''
-                    heroku container:login
-                    heroku container:push web --app %HEROKU_APP_NAME%
-                    heroku container:release web --app %HEROKU_APP_NAME%
+                    "C:\\Program Files\\heroku\\bin\\heroku.cmd" container:login
+                    "C:\\Program Files\\heroku\\bin\\heroku.cmd" container:push web --app %HEROKU_APP_NAME%
+                    "C:\\Program Files\\heroku\\bin\\heroku.cmd" container:release web --app %HEROKU_APP_NAME%
                     '''
                 }
             }
