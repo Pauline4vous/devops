@@ -1,208 +1,163 @@
-import os
-from flask import Flask, render_template, redirect, request, url_for, jsonify, flash, session
-from flask_session import Session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
-from bson.json_util import dumps
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_wtf.csrf import CSRFProtect
 from wtforms import Form, StringField, PasswordField, validators
-from os import path
+from email_validator import validate_email, EmailNotValidError
 
-# Import environment variables (if available)
-if path.exists("env.py"):
-    import env
+app = Flask(__name__)
+app.secret_key = 'polya1606'
 
-# Create Flask app instance
-app = Flask(name)
-
-# Flask configurations
-app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
-app.config["MONGO_URI"] = os.environ["MONGODB_URI"]
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-
-# Enable CSRF protection
-csrf = CSRFProtect(app)
-
-# MongoDB instance
+# MongoDB Configuration
+app.config["MONGO_URI"] = "mongodb://localhost:27017/give-take"  # Replace with your database name
 mongo = PyMongo(app)
 
-# Form validation classes
-class RegisterForm(Form):
-    username = StringField('Username', [validators.Length(min=3, max=25), validators.DataRequired()])
-    email = StringField('Email', [validators.Email(), validators.DataRequired()])
-    password = PasswordField('Password', [validators.Length(min=5, max=10), validators.DataRequired()])
-
+# WTForms for Login and Register
 class LoginForm(Form):
-    email = StringField('Email', [validators.Email(), validators.DataRequired()])
+    email = StringField('Email', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', [validators.DataRequired()])
 
-class ItemForm(Form):
-    item_name = StringField('Item Name', [validators.DataRequired()])
-    item_category = StringField('Category', [validators.DataRequired()])
-    item_description = StringField('Description', [validators.DataRequired()])
-    item_location = StringField('Location', [validators.DataRequired()])
-    item_img = StringField('Image URL', [validators.Optional()])
+class RegisterForm(Form):
+    username = StringField('Username', [validators.DataRequired()])
+    email = StringField('Email', [validators.DataRequired(), validators.Email()])
+    password = PasswordField('Password', [validators.DataRequired()])
 
-# Routes
-
+# Home Route
 @app.route('/')
 def home():
-    """Display all items"""
     search_query = request.args.get('search', '')
+    category_filter = request.args.get('item_category')
+    items = list(mongo.db.items.find())
+
+    # Apply search and category filters if provided
     if search_query:
-        items = mongo.db.items.find({
-            "$or": [
-                {"item_name": {"$regex": search_query, "$options": "i"}},
-                {"item_description": {"$regex": search_query, "$options": "i"}}
-            ]
-        })
-    else:
-        items = mongo.db.items.find()
-    return render_template(
-        '/pages/home.html', 
-        items=items,
-        active='home',
-        title="Re-Use Gang"
-    )
+        items = [item for item in items if search_query.lower() in item['item_name'].lower()]
+    if category_filter and category_filter != 'default':
+        items = [item for item in items if item['item_category'] == category_filter]
 
+    return render_template('pages/home.html', items=items)
 
-@app.route('/register', methods=['POST', 'GET'])
-def register():
-    """Register a new user"""
-    form = RegisterForm(request.form)
-    if request.method == "POST" and form.validate():
-        users = mongo.db.users
-        used_name = users.find_one({'username': form.username.data})
-        used_email = users.find_one({'email': form.email.data})
-        if not used_name and not used_email:
-            hashed_pwd = generate_password_hash(form.password.data)
-            users.insert_one({
-                "username": form.username.data,
-                "email": form.email.data,
-                "password": hashed_pwd
-            })
-            session['username'] = form.username.data
-            flash(f"Welcome to the Gang, {session['username']}!")
-            return redirect(url_for('home'))
-        else:
-            flash("Username or email is already in use. Please try again.")
-            return redirect(url_for('register'))
-    return render_template('/components/register.html', form=form, active='register')
-
-
-@app.route('/login', methods=['POST', 'GET'])
+# Login Route
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    """Log in a user"""
     form = LoginForm(request.form)
-    if request.method == "POST" and form.validate():
-        users = mongo.db.users
-        matched_user = users.find_one({'email': form.email.data})
-        if matched_user and check_password_hash(matched_user["password"], form.password.data):
-            session['username'] = matched_user["username"]
-            flash(f"Welcome back, {session['username']}!")
+    if request.method == 'POST' and form.validate():
+        email = form.email.data
+        password = form.password.data
+        user = mongo.db.users.find_one({'email': email})
+
+        if user and user['password'] == password:
+            session['username'] = user['username']
+            flash('Logged in successfully!', 'success')
             return redirect(url_for('home'))
         else:
-            flash("Invalid login credentials. Please try again.")
+            flash('Invalid credentials. Please try again.', 'danger')
+
+    return render_template('components/login.html', form=form)
+
+# Register Route
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+
+        if mongo.db.users.find_one({'email': email}):
+            flash('Email already registered.', 'danger')
+        else:
+            mongo.db.users.insert_one({'username': username, 'email': email, 'password': password})
+            flash('Registration successful! Please log in.', 'success')
             return redirect(url_for('login'))
-    return render_template('/components/login.html', form=form, active='login')
 
-@app.route('/logout')
-def logout():
-    """Log out the user"""
-    session.clear()
-    flash("You have been logged out!")
-    return redirect(url_for('home'))
+    return render_template('components/register.html', form=form)
 
-
-@app.route('/account', methods=["GET"])
+# Account Route
+@app.route('/account')
 def account():
-    """Display the user's account page"""
-    if "username" not in session:
-        flash("Please log in to access your account.")
+    if 'username' not in session:
+        flash('Please log in to access your account.', 'danger')
         return redirect(url_for('login'))
-    user_items = mongo.db.items.find({'username': session['username']})
-    return render_template('/pages/account.html', items=user_items, active='account')
 
+    username = session['username']
+    user_items = list(mongo.db.items.find({'username': username}))
 
-@app.route('/items/filter', methods=["POST"])
-def filter_items():
-    """Filter items by category"""
-    cat = request.get_json()
-    if cat == 'default':
-        all_items = mongo.db.items.find()
-        return dumps(all_items)
-    else:
-        found_items = mongo.db.items.find({'item_category': cat})
-        return dumps(found_items)
+    return render_template('pages/account.html', items=user_items, active='account')
 
-
-@app.route('/items/add', methods=["POST", "GET"])
+# Add Item Route
+@app.route('/items/add', methods=['GET', 'POST'])
 def add_item():
-    """Add a new item"""
-    form = ItemForm(request.form)
-    categories = ["Kids", "Outdoor", "Household", "Other"]
-    if request.method == "POST" and form.validate():
-        if "username" in session:
-            items = mongo.db.items
-            item_owner = mongo.db.users.find_one({'username': session['username']})
-            items.insert_one({
-                'username': session['username'],
-                'item_contact': item_owner['email'],
-                'item_name': form.item_name.data,
-                'item_category': form.item_category.data,
-                'item_description': form.item_description.data,
-                'item_location': form.item_location.data,
-                'item_img': form.item_img.data
-            })
-            flash("Your item has been added successfully!")
-            return redirect(url_for('home'))
-        else:
-            flash("Please log in to add items.")
-            return redirect(url_for('login'))
-    return render_template('/pages/additem.html', categories=categories, form=form, active='additem')
-
-
-@app.route('/items/update/<item_id>', methods=["POST", "GET"])
-def update_item(item_id):
-    """Update an existing item"""
-    form = ItemForm(request.form)
-    if "username" not in session:
-        flash("Please log in to edit items.")
+    if 'username' not in session:
+        flash('Please log in to add items.', 'danger')
         return redirect(url_for('login'))
-    clicked_item = mongo.db.items.find_one({'_id': ObjectId(item_id)})
-    if request.method == "POST" and form.validate():
-        mongo.db.items.update_one({'_id': ObjectId(item_id)}, {"$set": {
-            'item_name': form.item_name.data,
-            'item_category': form.item_category.data,
-            'item_description': form.item_description.data,
-            'item_location': form.item_location.data,
-            'item_img': form.item_img.data
-        }})
-        flash("Your item has been updated successfully!")
+
+    if request.method == 'POST':
+        item_data = {
+            'item_name': request.form['item_name'],
+            'item_category': request.form['item_category'],
+            'item_description': request.form['item_description'],
+            'item_location': request.form['item_location'],
+            'item_img': request.form['item_img'],
+            'username': session['username']
+        }
+        mongo.db.items.insert_one(item_data)
+        flash('Item added successfully!', 'success')
+        return redirect(url_for('home'))
+
+    categories = ['Kids', 'Outdoor', 'Household', 'Other']
+    return render_template('pages/additem.html', categories=categories)
+
+# Update Item Route
+@app.route('/items/update/<item_id>', methods=['GET', 'POST'])
+def update_item(item_id):
+    if 'username' not in session:
+        flash('Please log in to update items.', 'danger')
+        return redirect(url_for('login'))
+
+    item = mongo.db.items.find_one({'_id': item_id})
+    if not item:
+        flash('Item not found.', 'danger')
         return redirect(url_for('account'))
-    return render_template('/pages/updateitem.html', item=clicked_item, form=form, active='edit')
 
+    if request.method == 'POST':
+        updated_data = {
+            'item_name': request.form['item_name'],
+            'item_category': request.form['item_category'],
+            'item_description': request.form['item_description'],
+            'item_location': request.form['item_location'],
+            'item_img': request.form['item_img']
+        }
+        mongo.db.items.update_one({'_id': item_id}, {'$set': updated_data})
+        flash('Item updated successfully!', 'success')
+        return redirect(url_for('account'))
 
-@app.route('/items/delete/<item_id>', methods=["POST"])
+    return render_template('pages/updateitem.html', item=item)
+
+# Delete Item Route
+@app.route('/items/delete/<item_id>', methods=['POST'])
 def delete_item(item_id):
-    """Delete an item"""
-    mongo.db.items.delete_one({'_id': ObjectId(item_id)})
-    flash("Your item has been deleted.")
+    if 'username' not in session:
+        flash('Please log in to delete items.', 'danger')
+        return redirect(url_for('login'))
+
+    mongo.db.items.delete_one({'_id': item_id})
+    flash('Item archived successfully.', 'success')
     return redirect(url_for('account'))
 
+# Logout Route
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('home'))
 
-# Error Handlers
+# Custom Error Pages
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("/pages/404.html", error=error), 404
+    return render_template('pages/404.html'), 404
 
 @app.errorhandler(500)
-def internal_error(error):
-    return render_template("/pages/500.html", error=error), 500
+def server_error(error):
+    return render_template('pages/500.html'), 500
 
-
-if name == "main":
-    app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", "5000")), debug=False)
-    
+if __name__ == '__main__':
+    app.run(debug=True)

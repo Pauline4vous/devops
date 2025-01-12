@@ -1,8 +1,8 @@
 {% extends "layout/base.html" %}
-{% block title %}Error server{% endblock %} 
-{% block body %} 
-  
-  <h1>Oops! Looks like there was an error with the server</h1> 
-  <a href="{{ url_for('home') }}"><p>Click Here</a>To go to the Home Page</p> 
-  
-{% endblock %} 
+
+{% block title %}Error Server{% endblock %}
+
+{% block body %}
+<h1>Oops! Looks like there was an error with the server</h1>
+<a href="{{ url_for('home') }}"><p>Click Here</a>To go to the Home Page</p>
+{% endblock %}

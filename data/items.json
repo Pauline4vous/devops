@@ -1,0 +1,26 @@
+[
+    {
+        "username": "polina_kol",
+        "item_name": "Bicycle",
+        "item_category": "Outdoor",
+        "item_description": "A lightly used bicycle, perfect for commuting.",
+        "item_location": "Tashkent",
+        "item_img": "https://example.com/bicycle.jpg"
+    },
+    {
+        "username": "amira_sadik",
+        "item_name": "Children's Book Set",
+        "item_category": "Kids",
+        "item_description": "A set of children's books in excellent condition.",
+        "item_location": "Tashkent",
+        "item_img": "https://example.com/books.jpg"
+    },
+    {
+        "username": "jamshid_km",
+        "item_name": "Blender",
+        "item_category": "Household",
+        "item_description": "A powerful blender for smoothies and more.",
+        "item_location": "Samarkand",
+        "item_img": "https://example.com/blender.jpg"
+    }
+]

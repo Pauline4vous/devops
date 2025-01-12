@@ -1,7 +1,7 @@
 /**
  * @event onchange
  * Fetching category selected in the dropdown bar in HTML
- * Sending selection to Python for backend query of the database
+ * Sending selection to Flask backend via query parameters
  * Receiving filtered data back and calling the function to loop through
  * @callback <loopItems>
  */
@@ -10,22 +10,28 @@ const card = document.getElementById("card-item");
 
 selectCat.onchange = function () {
     const cat = selectCat.value;
+    const searchQuery = new URLSearchParams(window.location.search).get("search") || ""; // Get current search query
 
-    fetch(${window.origin}/items/filter, {
-        method: "POST",
-        body: JSON.stringify(cat),
+    // Create URL with query parameters for filtering
+    const filterUrl = `${window.origin}/?search=${searchQuery}&item_category=${cat}`;
+
+    fetch(filterUrl, {
+        method: "GET",
         cache: "no-cache",
         headers: new Headers({
             "content-type": "application/json",
         }),
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then((data) => loopItems(data))
         .catch((err) => {
             console.error(err);
-            alert(
-                Error: ${err}. Please refresh the page or return to the main page.
-            );
+            alert(`Error: ${err}. Please refresh the page or return to the main page.`);
         });
 };
 
@@ -70,7 +76,7 @@ function whichCat(item) {
  * @param {object} item - The item object to add its keys and values to the HTML
  */
 function injectCard(item) {
-    const cardHtml = 
+    const cardHtml = `
         <div class="col-12 col-sm-6 col-lg-4">
             <div class="card my-2 text-center">
                 <div class="card-body p-0">
@@ -99,9 +105,9 @@ function injectCard(item) {
                     </div>
                     ${
                         item.item_img
-                            ? <div class="card-img-contain text-left mb-3">
+                            ? `<div class="card-img-contain text-left mb-3">
 				<img src="${item.item_img}" class="card-img-top card-img" alt="Item Image">
-                              </div>
+                              </div>`
                             : ""
                     }
                     <div class="row my-3">
@@ -118,6 +124,6 @@ function injectCard(item) {
                 </div>
             </div>
         </div>
-    ;
+    `;
     return cardHtml;
 }

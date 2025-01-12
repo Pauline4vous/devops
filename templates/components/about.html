@@ -2,19 +2,20 @@
 <section class="container-fluid bg-darkblue white-text mt-3 mb-0" id="about">
     <div class="row about">
         <div class="col-12 text-center">
-            <h3 class="underline">Why the Reuse Gang?</h3>
+            <h3 class="underline">Why the Give-Take?</h3>
             <h3 class="text-uppercase">Our Statement:</h3>
             <h4>Recycle, reduce, reuse… close the loop!</h4>
             <ul>
-                <li class="statement-item">Because we consume and throw away too much!</li>
-                <li class="statement-item">Because we use many items for a short time.</li>
-                <li class="statement-item">Because items can be re-used for long.</li>
-                <li class="statement-item">Because many of us give to charities used items.</li>
-                <li class="statement-item">Because charities cannot take more stuff.</li>
-                <li class="statement-item">Because why buy new for short usage duration?</li>
-                <li class="statement-item">Because we cannot sell all used items.</li>
-                <li class="statement-item">Because a broken item's parts can be useful.</li>
-                <li class="statement-item">Because we love exchanging with other people.</li>
+                {% for statement in [
+                    "Because we consume and throw away too much!",
+                    "Because items can be re-used for long.",
+                    "Because why buy new for short usage duration?",
+                    "Because we cannot sell all used items.",
+                    "Because a broken item's parts can be useful.",
+                    "Because we love exchanging with other people."
+                ] %}
+                <li class="statement-item">{{ statement }}</li>
+                {% endfor %}
             </ul>
         </div>
     </div>

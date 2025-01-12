@@ -28,26 +28,3 @@ function collapsingCards() {
 }
 
 collapsingCards();
-
-/**
- * @event keyup
- * Search bar functionality to filter items by name or description
- */
-const searchInput = document.getElementById("search-bar");
-if (searchInput) {
-    searchInput.addEventListener("keyup", function () {
-        const query = searchInput.value.toLowerCase();
-        const cards = Array.from(document.getElementsByClassName("card"));
-        cards.forEach((card) => {
-            const title = card.querySelector(".card-title").innerText.toLowerCase();
-            const description = card
-                .querySelector(".card-text")
-                .innerText.toLowerCase();
-            if (title.includes(query) || description.includes(query)) {
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
-        });
-    });
-}

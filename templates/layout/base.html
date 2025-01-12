@@ -1,48 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Re-Use Gang">
+    <meta name="description" content="Re-Use Gang - A community-driven platform for exchanging and reusing items.">
     <meta name="keywords" content="reuse, recycle, community, freecycle, free, exchange">
-    <!-- favicon -->
-    <link rel="shortcut icon" type="image" href="{{url_for('static', filename='favicon/favicon-32x32.png')}}">
-    <!-- Style links -->
+
+    <!-- Open Graph Metadata for Social Media -->
+    <meta property="og:title" content="{{ title | default('Re-Use Gang') }}">
+    <meta property="og:description" content="Join Re-Use Gang to recycle and exchange items in your community!">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.png') }}">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="{{ request.url }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="icon" sizes="16x16" type="image/png" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+
+    <!-- Style Links -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css"/>
-    <title>{{title}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" />
+
+    <!-- Dynamic Title -->
+    <title>{{ title | default('Re-Use Gang') }}</title>
 </head>
+
 <body>
-    <!-- Navbar -->
+    <!-- Navigation -->
     {% include 'layout/nav.html' %}
-    <!-- Home or banner image -->
+
+    <!-- Home or Banner Image -->
     {% if active == "home" %}
         {% include 'components/homeimage.html' %}
     {% else %}
         {% include 'components/bannerimage.html' %}
     {% endif %}
-    <!-- Main content -->
-    <!-- Flash messages -->
+
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            {% for message in messages %}
-                <h3 class="text-center blue-text">{{ message }}</h3>
-            {% endfor %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-info text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
     {% endwith %}
+
+    <!-- Main Content -->
     {% block content %}{% endblock %}
-    <!-- About -->
+
+    <!-- About Section -->
     {% include 'components/about.html' %}
+
     <!-- Footer -->
     {% include 'layout/footer.html' %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js" defer></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     {% if active == 'home' %}
-        <script src="{{url_for('static', filename='js/filter.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/filter.js') }}" defer></script>
     {% endif %}
 </body>
+
 </html>
