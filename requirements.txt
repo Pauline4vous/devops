@@ -9,5 +9,5 @@ pycparser==2.21
 pymongo==4.5.0
 Werkzeug==2.2.3
 gunicorn==20.1.0
-tytest
+pytest
 Flask-Testing
