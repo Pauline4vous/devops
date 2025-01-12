@@ -1,33 +1,3 @@
-<h1 align="center">
-
-<a href="https://freecycle.net/" target="_blank"><img src="https://i.ibb.co/vYK0KB8/Screenshot-2020-03-10-at-1-14-15-AM.png" alt="Freecycle Mockup"/></a>
-
-</h1>
-
-<div align="center">
-
-<a href="https://freecycle.net/" target="_blank"><img src="https://i.ibb.co/4ZfmYSJ/logo-2.png" width='200' height='150' alt="Freecycle logo"></a>
-
-</div>
-
-Table of Contents
-Introduction
-How to Freecycle
-Freecycling Etiquette
-What to Freecycle
-Including a Photo
-Writing a Freecycle Post
-UX
-Strategy: Why and what?
-Scope: Features
-Existing Features
-Planned Features
-Skeleton: Presentation
-Surface: Design
-Technology Used
-Deployment
-Testing
-Credits
 <h2 id="introduction">Introduction</h2>
 
 Freecycle is a grassroots and entirely nonprofit movement that connects people looking to give away unwanted items with people who need those items—for free. The platform allows members to exchange items within their local communities, helping reduce waste, preserve resources, and keep useful items out of landfills.

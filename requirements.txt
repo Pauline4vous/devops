@@ -8,4 +8,6 @@ itsdangerous==2.1.2
 pycparser==2.21
 pymongo==4.5.0
 Werkzeug==2.2.3
-gunicorn==20.1.0
+gunicorn==20.1.07
+tytest
+Flask-Testing

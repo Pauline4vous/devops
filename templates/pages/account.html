@@ -1,18 +1,11 @@
 {% extends "layout/base.html" %}
-{% block content %}
 
-<!-- Page title -->
-<div class="row text-center">
-    <div class="col-12">
-        <h1 class='mx-5 text-center welcome'>Welcome back {{ session['username'] }}.</h1>
-        <h4>Below are your own items which you can edit or remove.</h4>
-    </div>
+{% block content %}
+<div class="text-center">
+    <h1 class="welcome">Welcome back {{ session['username'] }}.</h1>
+    <h4>Below are your own items which you can edit or remove.</h4>
 </div>
 
-<!-- Add button -->
 {% include 'components/addbutton.html' %}
-
-<!-- Cards -->
 {% include 'components/cards.html' %}
-
 {% endblock %}

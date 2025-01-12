@@ -30,7 +30,7 @@ pipeline {
             steps {
                 bat '''
                 venv\\Scripts\\activate
-                pytest tests/
+                pytest --junitxml=test-results.xml
                 '''
             }
         }
